@@ -1,2 +1,8 @@
 /* index.css */
 @import "tailwindcss";
+
+@layer components {
+    .navbtn {
+        @apply w-[50px] max-w-[25vw] m-[15px]; 
+    }
+}
