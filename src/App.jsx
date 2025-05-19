@@ -1,39 +1,30 @@
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Home.jsx';
+import Cart from './Cart.jsx';
+import Checkout from './Checkout.jsx';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Cart from "./Cart.jsx";
-import Checkout from "./Checkout.jsx";
 
 function App() {
-    // State is now directly in App instead of being passed from outside
     const [numitem, setNumItem] = useState(0);
 
     const addFn = (num) => {
-        setNumItem(prev => {
-            const updated = prev + num;
-            console.log("Updated numitem:", updated); 
+        setNumItem(prevItems => {
+            const updated = prevItems + num;
+            console.log("Updated numitem:", updated);
             return updated;
         });
     };
 
-    // Router creation stays the same, but now it closes over the state in this component
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            element: <Home numitem={numitem} addFn={addFn}/>,
-        },
-        {
-            path: "/cart",
-            element: <Cart numitem={numitem}/>,
-        },
-        {
-            path: "/checkout",
-            element: <Checkout />
-        }
-    ]);
-
-    return <RouterProvider router={router} />;
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home numitem={numitem} addFn={addFn} />} />
+                <Route path="/cart" element={<Cart numitem={numitem} />} />
+                <Route path="/checkout" element={<Checkout />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
